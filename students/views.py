@@ -77,3 +77,9 @@ class TutorView(ModelViewSet):
         valid_request = TutorSerializer(data=request.date)
         valid_request.is_valid(raise_exeption=True)
         
+        Tutor.objects.create(**valid_request.validated_data)
+
+        return Response(
+            {'success':'tutor created successfully'},
+            status = status.HTTP_201_CREATED
+        )
