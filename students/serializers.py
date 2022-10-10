@@ -15,7 +15,9 @@ class PackageSerializer(serializers.ModelSerializer):
         model = Package
         fields = "__all__"
 
+
 class TutorSerializer(serializers.ModelSerializer):
+    package = PackageSerializer(many=True)
     class Meta:
         model = Tutor
         fields = "__all__"
@@ -25,6 +27,9 @@ class TutorSerializer(serializers.ModelSerializer):
 #     package_id = serializers.CharField()
 
 class PackageEnrolmentSerializer(serializers.ModelSerializer):
+    student = StudentSerializer()
+    package = PackageSerializer()
+    tutor = TutorSerializer()
     class Meta:
         model = PackageEnroled
         fields = "__all__"

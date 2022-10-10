@@ -43,7 +43,7 @@ class PackageView(ModelViewSet):
 
 class EnrollStudentView(ModelViewSet):
     # http_method_names = ['post']
-    serializer_class = PackageEnrolmentSerializer()
+    serializer_class = PackageEnrolmentSerializer
     queryset = PackageEnroled.objects.select_related('student', 'package', 'tutor')
     permission_classes = []
 
