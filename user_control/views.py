@@ -2,18 +2,19 @@ from .utils import generate_user_tokens
 from rest_framework.viewsets import ModelViewSet
 from .serializers import (CreateUserSerializer,
                             CustomUser, LoginSerializer,
-                            UpdatePasswordSerializer, CustomUserSerializer)
+                            UpdatePasswordSerializer, CustomUserSerializer, LogoutSerializer)
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework_simplejwt.tokens import RefreshToken, TokenError
+
 
 
 class CreateUserView(ModelViewSet):
     http_method_names = ['post']
-    serializer_class= CreateUserSerializer
-    queryset = CustomUser.objects.all()
+    serializer_class= CreateUserSerializer 
     permission_classes = [IsAuthenticated]
 
     def create(self, request):
@@ -88,3 +89,26 @@ class MeView(ModelViewSet):
     # def list(self, request):
     #     data = self.serializer_class(data=request.data)
     #     return Response(data)
+
+class LogoutView(ModelViewSet):
+    http_method_names = ['post']
+    serializer_class = LogoutSerializer
+    queryset = ''
+    permission_classes = [IsAuthenticated]
+
+    def create(self, request):
+        valid_request = self.serializer_class(data=request.data)
+        valid_request.is_valid(raise_exception=True)
+        
+        print(valid_request.validated_data['refresh_token'])
+        try:
+            token = RefreshToken(token=valid_request.validated_date['refresh_token'])
+            token.blacklist()
+            return Response({'success':'logout successfully'})
+        except TokenError:
+          return Response({'error': 'logout failed'})
+        
+
+
+
+        

@@ -23,5 +23,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
         model = CustomUser
         exclude = ('password',)
     
-
+class LogoutSerializer(serializers.Serializer):
+    refresh_token = serializers.CharField()
 

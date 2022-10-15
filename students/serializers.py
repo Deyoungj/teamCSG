@@ -22,14 +22,15 @@ class TutorSerializer(serializers.ModelSerializer):
         model = Tutor
         fields = "__all__"
 
-# class PackageEnrolmentSerial izer(serializers.Serializer):
-#     user_id = serializers.CharField()
-#     package_id = serializers.CharField()
+
 
 class PackageEnrolmentSerializer(serializers.ModelSerializer):
     student = StudentSerializer()
     package = PackageSerializer()
     tutor = TutorSerializer()
+
     class Meta:
         model = PackageEnroled
         fields = "__all__"
+
+

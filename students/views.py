@@ -9,7 +9,7 @@ class StudentView(ModelViewSet):
     # http_method_names = ['post']
     serializer_class = StudentSerializer
     queryset = Student.objects.all()
-    permission_classes = []
+    permission_classes = [IsAuthenticated]
     
     def create(self, request):
         valid_request = self.serializer_class(data=request.data)
@@ -28,7 +28,7 @@ class StudentView(ModelViewSet):
 class PackageView(ModelViewSet):
     serializer_class = PackageSerializer
     queryset = Package.objects.all()
-    permission_classes = []
+    permission_classes = [IsAuthenticated]
 
     def create(self, request):
         valid_request = self.serializer_class(data=request.data)
@@ -45,20 +45,32 @@ class EnrollStudentView(ModelViewSet):
     # http_method_names = ['post']
     serializer_class = PackageEnrolmentSerializer
     queryset = PackageEnroled.objects.select_related('student', 'package', 'tutor')
-    permission_classes = []
+    permission_classes = [IsAuthenticated]
 
 
 
     def create(self, request):
-        valid_request = self.serializer_class(data=request.data)
+
+        student = Student.objects.filter(id=request.POST.get('student', None))[0]
+        package = Package.objects.filter(id=request.POST.get('package', None))[0]
+        tutor = Tutor.objects.filter(id=request.POST.get('tutor', None))[0]
+        print(student, package, tutor)
+
+        data = {
+            'student':[student],
+            'package':[package],
+            'tutor':[tutor],
+        }
+        valid_request = self.serializer_class(data=data)
+        print(request.data)
         valid_request.is_valid(raise_exception=True)
-        # student = Student.objects.filter(id=valid_request.validated_data['student']).first()
-        # package = Package.objects.filter(id=valid_request.validated_data['package']).first()
+
+        
 
         print(valid_request.validated_data['student'], valid_request.validated_data['package'])
 
 
-        PackageEnroled.objects.create(**valid_request.validated_data)
+        # PackageEnroled.objects.create(**valid_request.validated_data)
 
         return Response(
             {'success': 'enrolled student success'},
@@ -70,7 +82,7 @@ class EnrollStudentView(ModelViewSet):
 class TutorView(ModelViewSet):
     serializer_class = TutorSerializer
     queryset = Tutor.objects.prefetch_related('package')
-    permission_classes = []
+    permission_classes = [IsAuthenticated]
 
 
     def create(self,request):
@@ -83,3 +95,4 @@ class TutorView(ModelViewSet):
             {'success':'tutor created successfully'},
             status = status.HTTP_201_CREATED
         )
+
