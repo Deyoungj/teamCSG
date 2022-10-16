@@ -57,25 +57,27 @@ class EnrollStudentView(ModelViewSet):
         print(student, package, tutor)
 
         data = {
-            'student':[student],
-            'package':[package],
-            'tutor':[tutor],
+            'student':student,
+            'package':package,
+            'tutor':tutor,
         }
-        valid_request = self.serializer_class(data=data)
-        print(request.data)
-        valid_request.is_valid(raise_exception=True)
+        # tutor=Tutor.objects.create(student=student, package=package, tutor=tutor)
+        packageenroled=PackageEnroled.objects.create(student=student, package=package, tutor=tutor)
+        packageenroled.save()
+        valid_request = self.serializer_class(tutor)
 
         
-
-        print(valid_request.validated_data['student'], valid_request.validated_data['package'])
-
-
-        # PackageEnroled.objects.create(**valid_request.validated_data)
 
         return Response(
             {'success': 'enrolled student success'},
             status = status.HTTP_201_CREATED
         )
+
+        def update(self, request):
+            enroled_object = self.get_object()
+            data = request.data
+
+            # packageenrolled = PackageEnroled.objects.get(id=)
 
 
 
