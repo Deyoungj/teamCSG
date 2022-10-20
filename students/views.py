@@ -56,28 +56,59 @@ class EnrollStudentView(ModelViewSet):
         tutor = Tutor.objects.filter(id=request.POST.get('tutor', None))[0]
         print(student, package, tutor)
 
-        data = {
-            'student':student,
-            'package':package,
-            'tutor':tutor,
-        }
-        # tutor=Tutor.objects.create(student=student, package=package, tutor=tutor)
+        
         packageenroled=PackageEnroled.objects.create(student=student, package=package, tutor=tutor)
         packageenroled.save()
-        valid_request = self.serializer_class(tutor)
+        serializer = self.serializer_class(tutor)
 
         
 
         return Response(
-            {'success': 'enrolled student success'},
+            {'success': 'enrolled student success', 'data':serializer.data},
             status = status.HTTP_201_CREATED
         )
 
-        def update(self, request):
-            enroled_object = self.get_object()
-            data = request.data
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        data = request.data
 
-            # packageenrolled = PackageEnroled.objects.get(id=)
+        student = Student.objects.filter(id=request.POST.get('student', instance.student))[0]
+        package = Package.objects.filter(id=request.POST.get('package', instance.package))[0]
+        tutor = Tutor.objects.filter(id=request.POST.get('tutor', instance.tutor))[0]
+
+        print(instance.id)
+        instance.student = student
+        instance.tutor = tutor
+        instance.package = package
+        instance.save()
+        serializer = self.serializer_class(data=instance)
+
+        return Response({'success':'package enrolled updated successfully'}, status=status.HTTP_201_CREATED)
+
+    def partial_update(self, request, *args, **kwargs):
+        instance = self.get_object()
+
+        if 'package' in request.data:
+            package = Package.objects.filter(id=request.POST.get('package', instance.package))[0]
+            instance.package = package
+
+        if 'student' in request.data:
+            student = Student.objects.filter(id=request.POST.get('student', instance.student))[0]
+            instance.student = student
+
+        if 'tutor' in request.data:
+            tutor = Tutor.objects.filter(id=request.POST.get('tutor', instance.tutor))[0]
+            instance.tutor = tutor
+
+        
+        
+        
+        instance.save()
+        serializer = self.serializer_class(data=instance)
+
+        return Response({'success':'package enrolled updated successfully'}, status=status.HTTP_201_CREATED)
+
+
 
 
 
@@ -88,8 +119,8 @@ class TutorView(ModelViewSet):
 
 
     def create(self,request):
-        valid_request = TutorSerializer(data=request.date)
-        valid_request.is_valid(raise_exeption=True)
+        valid_request = TutorSerializer(data=request.data)
+        valid_request.is_valid(raise_exception=True)
         
         Tutor.objects.create(**valid_request.validated_data)
 
@@ -97,4 +128,7 @@ class TutorView(ModelViewSet):
             {'success':'tutor created successfully'},
             status = status.HTTP_201_CREATED
         )
+
+    def update(self, request):
+        instance = self.get_object()
 
