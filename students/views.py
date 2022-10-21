@@ -106,7 +106,7 @@ class EnrollStudentView(ModelViewSet):
         instance.save()
         serializer = self.serializer_class(data=instance)
 
-        return Response({'success':'package enrolled updated successfully'}, status=status.HTTP_201_CREATED)
+        return Response({'success':'package enrolled updated successfully', 'data': serializer.data}, status=status.HTTP_201_CREATED)
 
 
 
@@ -119,16 +119,42 @@ class TutorView(ModelViewSet):
 
 
     def create(self,request):
-        valid_request = TutorSerializer(data=request.data)
-        valid_request.is_valid(raise_exception=True)
-        
-        Tutor.objects.create(**valid_request.validated_data)
+        data = request.data
+        print(data)
+        tutor = Tutor.objects.create(fullname=data['fullname'], email=data['email'], gender=data['gender'], address=data['address'])
+        tutor.save()
+        if 'package' in data:
+            for package in data['package']:
+                package = Package.objects.get(name=package['name'])
+                print(package)
+                tutor.package.add(package)
+
 
         return Response(
             {'success':'tutor created successfully'},
             status = status.HTTP_201_CREATED
         )
 
-    def update(self, request):
+    def update(self, request, *args, **kwargs):
         instance = self.get_object()
+
+        data = request.data
+
+        if 'fullname' not in data and 'email' not in data and 'gender' not in data and 'address' not in data and 'package' not in data:
+            return Response({"error":"fullname, email, gender, address and package are required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # instance.fullname = data['fullname']
+        # instance.email = data['email']
+        # instance.gender = data['gender']
+        # instance.address = data['address']
+
+        t = instance.package.all()
+        t[0].price = 100
+        print(t[0].price)
+    
+
+        if instance.package.all() == None:
+            print('no package')
+
+  
 
