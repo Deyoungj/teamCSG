@@ -185,6 +185,6 @@ class TutorView(ModelViewSet):
             elif "remove" == data["package"][0]["action"]:
                 print("remove action")
         
-        serializer = self.serializer_class(instance)
+        serializer = self.serializer_class(data=instance)
 
         return Response(serializer.data)
