@@ -143,18 +143,48 @@ class TutorView(ModelViewSet):
         if 'fullname' not in data and 'email' not in data and 'gender' not in data and 'address' not in data and 'package' not in data:
             return Response({"error":"fullname, email, gender, address and package are required"}, status=status.HTTP_400_BAD_REQUEST)
 
-        # instance.fullname = data['fullname']
-        # instance.email = data['email']
-        # instance.gender = data['gender']
-        # instance.address = data['address']
+        instance.fullname = data['fullname']
+        instance.email = data['email']
+        instance.gender = data['gender']
+        instance.address = data['address']
 
         t = instance.package.all()
-        t[0].price = 100
-        print(t[0].price)
+        print(t)
     
 
         if instance.package.all() == None:
             print('no package')
 
-  
+    def partial_update(self , request, *args, **arkargs):
+        instance = self.get_object()
+        data = request.data
 
+
+        if 'fullname' in data:
+            instance.fullname = data['fullname']
+
+        if 'email' in data:
+            instance.email = data['email']
+            
+        if 'gender' in data:
+            instance.gender = data['gender']
+
+        if 'address' in data:
+            instance.address = data['address']
+
+        instance.save()
+
+        if 'package' in data:
+            
+            if "add" == data["package"][0]["action"]:
+                print("add ation")
+                package = Package.objects.get(name=data["package"][0]["name"])
+                print(package)
+                instance.package.add(package)
+
+            elif "remove" == data["package"][0]["action"]:
+                print("remove action")
+        
+        serializer = self.serializer_class(instance)
+
+        return Response(serializer.data)
