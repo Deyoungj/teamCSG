@@ -183,8 +183,11 @@ class TutorView(ModelViewSet):
                 instance.package.add(package)
 
             elif "remove" == data["package"][0]["action"]:
-                print("remove action")
+                package = Package.objects.get(name=data["package"][0]["name"])
+                print(package)
+                instance.package.remove(package)
         
         serializer = self.serializer_class(data=instance)
+        
 
-        return Response(serializer.data)
+        return Response({"success":"tutor updated successfully"})
