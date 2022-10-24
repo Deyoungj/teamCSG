@@ -135,25 +135,7 @@ class TutorView(ModelViewSet):
             status = status.HTTP_201_CREATED
         )
 
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-
-        data = request.data
-
-        if 'fullname' not in data and 'email' not in data and 'gender' not in data and 'address' not in data and 'package' not in data:
-            return Response({"error":"fullname, email, gender, address and package are required"}, status=status.HTTP_400_BAD_REQUEST)
-
-        instance.fullname = data['fullname']
-        instance.email = data['email']
-        instance.gender = data['gender']
-        instance.address = data['address']
-
-        t = instance.package.all()
-        print(t)
     
-
-        if instance.package.all() == None:
-            print('no package')
 
     def partial_update(self , request, *args, **arkargs):
         instance = self.get_object()
@@ -185,7 +167,7 @@ class TutorView(ModelViewSet):
             elif "remove" == data["package"][0]["action"]:
                 package = Package.objects.get(name=data["package"][0]["name"])
                 print(package)
-                instance.package.remove(package)
+                instance.package.remove4(package)
         
         serializer = self.serializer_class(data=instance)
         
