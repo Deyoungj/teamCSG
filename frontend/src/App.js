@@ -1,12 +1,26 @@
+import "./App.css";
+import { Button } from 'antd';
+import Sidebar from './components/Sidebar';
+import { Layout, Breadcrumb} from "antd";
 
-import './App.css';
+const { Header, Content, Footer} = Layout;
+
 
 function App() {
   return (
-    <div className="App">
-     <h1> testng this </h1>
-     
-    </div>
+
+      <Layout 
+          style={{
+            minHeight: '100vh',
+          }}
+        >
+
+        <Sidebar />
+
+      </Layout>
+      
+
+      
   );
 }
 
