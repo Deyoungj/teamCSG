@@ -1,9 +1,9 @@
 import "./App.css";
-import { Button } from 'antd';
 import Sidebar from './components/Sidebar';
+import Headers from './components/Header'
 import { Layout, Breadcrumb} from "antd";
 
-const { Header, Content, Footer} = Layout;
+
 
 
 function App() {
@@ -16,6 +16,11 @@ function App() {
         >
 
         <Sidebar />
+
+        <Layout className="site-layout">
+            <Headers />
+
+        </Layout>
 
       </Layout>
       

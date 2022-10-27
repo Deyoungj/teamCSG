@@ -26,8 +26,8 @@ const Sidebar = () => {
       >
         <div className="logo" />
         <Menu
-          theme="dark"
-          defaultSelectedKeys={["/"]}
+          theme="light"
+          defaultSelectedKeys={[ window.location.pathname ]}
           mode="inline"
           items={[
               {label: 'Dashboard', key: '/'},
