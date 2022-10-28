@@ -1,15 +1,16 @@
 import { useState } from "react";
 import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
+  CodeSandboxOutlined,
+  CodeOutlined,
+  PoweroffOutlined,
   TeamOutlined,
   UserOutlined,
+  DashboardOutlined
 } from '@ant-design/icons';
 
 import { Layout, Breadcrumb, Menu } from "antd";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 
 
@@ -24,17 +25,21 @@ const Sidebar = () => {
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
       >
-        <div className="logo" />
         <Menu
           theme="light"
           defaultSelectedKeys={[ window.location.pathname ]}
           mode="inline"
+          style={{
+            height: '100%',
+            borderRight: 0,
+          }}
           items={[
-              {label: 'Dashboard', key: '/'},
-              {label: 'Students', key: '/Students'},
-              {label: 'Tutors', key: '/Tutors'},
-              {label: 'Packages', key: '/Packages'},
-              {label: 'Logout', key: '/Logout'},
+              {label: 'Dashboard', key: '/', icon: <DashboardOutlined />},
+              {label: 'Students', key: '/Students', icon: <TeamOutlined />},
+              {label: 'Tutors', key: '/Tutors', icon: <CodeSandboxOutlined />},
+              {label: 'Packages', key: '/Packages', icon: <CodeOutlined />},
+              {label: 'Profile', key: '/Profile', icon: <UserOutlined />},
+              {label: 'Logout', key: '/Logout', icon: <PoweroffOutlined />, danger: true},
           ]}
         />
       </Sider>

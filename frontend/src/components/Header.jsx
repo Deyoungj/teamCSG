@@ -1,14 +1,15 @@
-import { Layout } from "antd";
+import { Layout, Menu } from "antd";
 
 const { Header } = Layout;
 
-const Headers = () => {
+const TopHeader = () => {
     return (
        <Header
-        className="site-layout-background"
-        style={{
-            padding: 0,
-       }}>
+        className="header">
+           <div className="logo" ></div>
+           <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={[
+               {label: 'Dashboard',},
+           ]} />
        
 
        </Header>
