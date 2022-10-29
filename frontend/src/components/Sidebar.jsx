@@ -24,7 +24,7 @@ const Sidebar = () => {
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
-      >
+      > 
         <Menu
           theme="light"
           defaultSelectedKeys={[ window.location.pathname ]}
