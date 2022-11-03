@@ -24,9 +24,12 @@ const Sidebar = () => {
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
+        style={{
+          backdroundColor:'white'
+        }}
       > 
         <Menu
-          theme="light"
+          theme="dark"
           defaultSelectedKeys={[ window.location.pathname ]}
           mode="inline"
           style={{

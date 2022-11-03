@@ -5,9 +5,9 @@ const { Header } = Layout;
 const {Title} = Typography;
 
 
-const TopHeader = () => {
+const MainHeader = () => {
     return (
-       <Header  className="header" style={{
+       <Header  className="site-layout-background" style={{
            backgroundColor: 'white',
            padding:10
        }}>
@@ -27,4 +27,4 @@ const TopHeader = () => {
     );
 }
 
-export default TopHeader;
+export default MainHeader;
