@@ -19,8 +19,10 @@ const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <div>
+
+      
       <Sider
+      width={300} breakpoint="lg" collapsedWidth="0" expandBehaviour="overTheTop"
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
@@ -29,7 +31,7 @@ const Sidebar = () => {
         }}
       > 
         <Menu
-          theme="dark"
+          theme="light"
           defaultSelectedKeys={[ window.location.pathname ]}
           mode="inline"
           style={{
@@ -46,7 +48,6 @@ const Sidebar = () => {
           ]}
         />
       </Sider>
-    </div>
   );
 };
 

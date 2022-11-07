@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+.ant-layout-sider-trigger {
+  background-color: #10a71c;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

@@ -11,16 +11,12 @@ const MainHeader = () => {
            backgroundColor: 'white',
            padding:10
        }}>
-           <Title style={{float: 'right',}} level= {5}>example@mail.com</Title>
+           
            <div className="logo">
             <Title level= {3}>TeamCSG</Title>
-            {/* <img src={Image} alt="logo" width="30px" height="31px" /> */}
+             {/* <img src={Image} alt="logo" width="30px" height="31px" /> */}<Title style={{float: 'right',}} level= {5}>example@mail.com</Title>
           </div>
           
-
-           {/* <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']} items={[
-               {label: 'Dashboard',},
-           ]} /> */}
        
 
        </Header>
