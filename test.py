@@ -1,18 +1,3 @@
-# from datetime import datetime
-# from dateutil.relativedelta import relativedelta
+import secrets
 
-
-# t = datetime.now() + relativedelta(months=6)
-
-# print(t)
-
-
-class Test:
-    def __init__(self, name) -> None:
-        self.name = name
-
-    def g(self):
-        print(self)
-
-# t = Test('chidi')
-# t.g()
+print(secrets.token_hex(25))
