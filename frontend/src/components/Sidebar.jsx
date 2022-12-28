@@ -26,6 +26,7 @@ const Sidebar = () => {
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
         breakpoint = 'sm'
+        // collapsedWidth={0}
         style={{
           backdroundColor:'white',
           height: '100vh',
