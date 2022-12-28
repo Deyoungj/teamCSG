@@ -21,17 +21,26 @@ const Sidebar = () => {
   return (
 
       
-      <Sider
-      width={300} breakpoint="lg" collapsedWidth="0" expandBehaviour="overTheTop"
+      <Sider 
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
+        breakpoint = 'sm'
         style={{
-          backdroundColor:'white'
+          backdroundColor:'white',
+          height: '100vh',
+          position: 'fixed'
         }}
       > 
+      <div
+          style={{
+            height: 32,
+            margin: 16,
+            background: 'rgba(255, 255, 255, 0.2)',
+          }}
+        />
         <Menu
-          theme="light"
+          theme="dark"
           defaultSelectedKeys={[ window.location.pathname ]}
           mode="inline"
           style={{
