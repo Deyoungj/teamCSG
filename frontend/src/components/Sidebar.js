@@ -1,5 +1,9 @@
+import React from 'react';
 
-
-const Sidebar = {
-    
+const Sidebar= () => {
+    return (
+        <div className='bg-blue-600'>
+            
+        </div>
+    );
 }
